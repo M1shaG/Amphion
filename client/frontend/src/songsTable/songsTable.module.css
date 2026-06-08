@@ -1,0 +1,75 @@
+.playlistDesc {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #f9af4f;
+    margin-bottom: 10px;
+}
+
+.playlistName {
+    font-size: 36px;
+}
+
+.playlistDescName {
+    margin-left: 20px;
+}
+
+.playlistInfo {
+    text-align: left;
+}
+
+table {
+    background: #0d1017;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead th {
+    color: #565b66;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid #1e2530;
+    padding: 8px 12px;
+}
+
+tbody tr:hover {
+    background: #1a1f29;
+    cursor: pointer;
+}
+
+tbody td {
+    color: #b8bfc8;
+    padding: 10px 12px;
+}
+
+.btnCol {
+    width: 200px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 36px;
+    padding: 0 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btnPrimary {
+    background: #e6b450;
+    color: #0d1017;
+}
+
+.btnPrimary:hover {
+    background: #f0c060;
+}

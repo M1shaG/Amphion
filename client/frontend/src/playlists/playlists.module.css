@@ -1,0 +1,22 @@
+.playlistElement {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #f9af4f;
+    margin-bottom: 15px;
+}
+
+.playlistText {
+    margin-left: 10px;
+}
+
+.playlistName {
+    font-weight: bold;
+    text-align: left;
+
+}
+
+.playlistDescription {
+    text-align: left;
+    font-size: 12px;
+}

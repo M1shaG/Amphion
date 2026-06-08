@@ -1,0 +1,12 @@
+.HeaderText {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.HeaderInput input {
+    background-color: #191d22;
+    border-color: #f9af4f;
+    padding: 5px 200px;
+    border-radius: 25px;
+    border-style: solid;
+}

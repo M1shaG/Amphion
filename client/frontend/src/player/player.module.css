@@ -1,0 +1,193 @@
+.player {
+    background: #0d1017;
+    border-top: 0.5px solid #1e2530;
+    padding: 12px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    height: 80px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.loading {
+    color: #565b66;
+    font-size: 13px;
+}
+
+.trackInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cover {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    background: #1e2530;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.trackTitle {
+    color: #e6e1cf;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.trackAuthor {
+    color: #565b66;
+    font-size: 12px;
+    margin-top: 2px;
+    text-align: left;
+}
+
+.likeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #565b66;
+    display: flex;
+    padding: 4px;
+    transition: color 0.15s;
+}
+
+.likeBtn:hover {
+    color: #e6b450;
+}
+
+.likeBtn.liked {
+    color: #e6b450;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.controlsBtns {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ctrlBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #b8bfc8;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    transition: color 0.15s, transform 0.1s;
+}
+
+.ctrlBtn:hover {
+    color: #e6e1cf;
+}
+
+.ctrlBtn:active {
+    transform: scale(0.92);
+}
+
+.ctrlBtn.active {
+    color: #e6b450;
+}
+
+.playBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e6e1cf;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d1017;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.playBtn:hover {
+    background: #fff;
+    transform: scale(1.06);
+}
+
+.playBtn:active {
+    transform: scale(0.97);
+}
+
+.progressRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.time {
+    color: #565b66;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    min-width: 32px;
+}
+
+.progressSlider,
+.volSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: #1e2530;
+    cursor: pointer;
+    outline: none;
+}
+
+.progressSlider {
+    flex: 1;
+}
+
+.volSlider {
+    width: 80px;
+}
+
+.progressSlider::-webkit-slider-thumb,
+.volSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e6e1cf;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.progressSlider:hover::-webkit-slider-thumb,
+.volSlider:hover::-webkit-slider-thumb {
+    opacity: 1;
+}
+
+.progressSlider:hover,
+.volSlider:hover {
+    background: linear-gradient(to right, #e6b450 var(--val, 0%), #1e2530 var(--val, 0%));
+}
+
+.extras {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.volWrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
