@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GetPeople } from "../../wailsjs/go/main/App";
+import { GetSongs } from "../../wailsjs/go/main/App";
 import placeholder1 from './../assets/images/1.jpg'
 import styles from './songsTable.module.css'
 import { IconPlayerPlay, IconHeart, IconPlus } from '@tabler/icons-react';
@@ -14,7 +14,7 @@ export default function SongsTable() {
     const [songs, setSongs] = useState<Song[]>([]);
 
     useEffect(() => {
-        GetPeople().then(setSongs).catch(console.error);
+        GetSongs().then(setSongs).catch(console.error);
     }, [])
 
     console.log(songs)

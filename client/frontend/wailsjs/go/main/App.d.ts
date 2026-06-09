@@ -4,4 +4,4 @@ import {main} from '../models';
 
 export function GetMusic():Promise<string>;
 
-export function GetPeople():Promise<Array<main.Song>>;
+export function GetSongs():Promise<Array<main.Song>>;

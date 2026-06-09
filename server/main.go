@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 
-	"github.com/dhowden/tag"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
@@ -30,15 +32,13 @@ func handleError(err error) {
 // DB
 //
 
-/*
-func insert() {
+func insert(title string, author string) {
 	sqlStatement := `INSERT INTO songs (song_title, song_author)
 	VALUES ($1, $2)`
-	title, author := parseSong()
+
 	_, err := db.Exec(sqlStatement, title, author)
 	handleError(err)
 }
-*/
 
 func dbConn() {
 	err := godotenv.Load()
@@ -68,6 +68,7 @@ func dbConn() {
 
 // Temporiary
 func iterateAllSongs() {
+	i := 1
 	d, err := os.ReadDir("./songs")
 	handleError(err)
 	for _, entry := range d {
@@ -75,22 +76,50 @@ func iterateAllSongs() {
 			continue
 		}
 
-		f, err := os.Open("./songs/" + entry.Name())
-		handleError(err)
-		defer f.Close()
+		oldPath := filepath.Join("./songs", entry.Name())
+		newPath := fmt.Sprintf("./db_songs/%d.ogg", i)
 
-		fmt.Println(entry.Name())
+		err := copyFile(oldPath, newPath)
+		handleError(err)
+
+		title, author := parseSong(entry.Name())
+		insert(title, author)
+		i++
+
 	}
 }
 
-func parseSong(f *os.File) (string, string) {
-	meta, err := tag.ReadFrom(f)
-	handleError(err)
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
 
-	title := meta.Title()
-	artist := meta.Artist()
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
 
-	return title, artist
+	_, err = io.Copy(out, in)
+	return err
+}
+
+func parseSong(filename string) (string, string) {
+	if i := strings.Index(filename, "["); i != -1 {
+		filename = strings.TrimSpace(filename[:i])
+		fmt.Println(filename)
+	}
+
+	parts := strings.SplitN(filename, "-", 2)
+
+	if len(parts) != 2 {
+		fmt.Println("invalid parts")
+		return "", ""
+	}
+
+	return parts[0], parts[1]
 }
 
 //
@@ -142,6 +171,6 @@ func httpServer() {
 func main() {
 	dbConn()
 	defer db.Close()
-	iterateAllSongs()
+	//	iterateAllSongs()
 	httpServer()
 }

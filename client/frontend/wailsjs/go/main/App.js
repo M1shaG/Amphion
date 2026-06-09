@@ -6,6 +6,6 @@ export function GetMusic() {
   return window['go']['main']['App']['GetMusic']();
 }
 
-export function GetPeople() {
-  return window['go']['main']['App']['GetPeople']();
+export function GetSongs() {
+  return window['go']['main']['App']['GetSongs']();
 }

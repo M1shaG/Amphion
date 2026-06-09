@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"net/http"
 	"os"
 )
 
@@ -30,25 +31,30 @@ func (a *App) startup(ctx context.Context) {
 }
 
 // Greet returns a greeting for the given name
-func (a *App) GetPeople() ([]Song, error) {
-	data, err := os.ReadFile("test.json")
+func (a *App) GetSongs() ([]Song, error) {
+	resp, err := http.Get("http://localhost:8080/songs")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	//data, err := os.ReadFile("test.json")
+	//if err != nil {
+	//	return nil, err
+	//}
+
+	var songs []Song
+	err = json.NewDecoder(resp.Body).Decode(&songs)
 	if err != nil {
 		return nil, err
 	}
 
-	var people []Song
-	err = json.Unmarshal(data, &people)
-	if err != nil {
-		return nil, err
-	}
-
-	return people, nil
+	return songs, nil
 }
 
 func (a *App) GetMusic() (string, error) {
-	data, err := os.ReadFile("solevar.ogg");
+	data, err := os.ReadFile("solevar.ogg")
 	if err != nil {
 		return "", err
 	}
-	return base64.StdEncoding.EncodeToString(data), nil;
+	return base64.StdEncoding.EncodeToString(data), nil
 }
