@@ -82,7 +82,7 @@ func iterateAllSongs() {
 		err := copyFile(oldPath, newPath)
 		handleError(err)
 
-		title, author := parseSong(entry.Name())
+		author, title := parseSong(entry.Name())
 		insert(title, author)
 		i++
 
@@ -132,6 +132,23 @@ type Song struct {
 	Author string `json:"song_author"`
 }
 
+func songsPlayHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		http.Error(w, "missing id", http.StatusBadRequest)
+		return
+	}
+
+	path := filepath.Join("./db_songs", id+".ogg")
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		http.Error(w, "not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "audio/ogg")
+	http.ServeFile(w, r, path)
+}
+
 func songsHandler(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT song_id, song_title, song_author FROM songs")
 	if err != nil {
@@ -159,6 +176,7 @@ func songsHandler(w http.ResponseWriter, r *http.Request) {
 
 func httpServer() {
 	http.HandleFunc("/songs", songsHandler)
+	http.HandleFunc("/songs/play", songsPlayHandler)
 
 	log.Println("Server running on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -171,6 +189,6 @@ func httpServer() {
 func main() {
 	dbConn()
 	defer db.Close()
-	//	iterateAllSongs()
+//	iterateAllSongs()
 	httpServer()
 }

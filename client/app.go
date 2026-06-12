@@ -4,14 +4,15 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
 
 type Song struct {
-	ID     int    `json:"id"`
-	Author string `json:"author"`
-	Title  string `json:"title"`
+	ID     int    `json:"song_id"`
+	Author string `json:"song_author"`
+	Title  string `json:"song_title"`
 }
 
 // App struct
@@ -43,10 +44,13 @@ func (a *App) GetSongs() ([]Song, error) {
 	//}
 
 	var songs []Song
+
 	err = json.NewDecoder(resp.Body).Decode(&songs)
 	if err != nil {
 		return nil, err
 	}
+	
+	fmt.Printf("%+v\n", songs)
 
 	return songs, nil
 }

@@ -1,9 +1,9 @@
 export namespace main {
 	
 	export class Song {
-	    id: number;
-	    author: string;
-	    title: string;
+	    song_id: number;
+	    song_author: string;
+	    song_title: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Song(source);
@@ -11,9 +11,9 @@ export namespace main {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.id = source["id"];
-	        this.author = source["author"];
-	        this.title = source["title"];
+	        this.song_id = source["song_id"];
+	        this.song_author = source["song_author"];
+	        this.song_title = source["song_title"];
 	    }
 	}
 
