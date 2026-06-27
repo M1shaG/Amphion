@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -46,7 +47,7 @@ func dbConn() {
 
 	host := os.Getenv("HOST")
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
-	user := os.Getenv("USER")
+	user := os.Getenv("DB_USER")
 	password := os.Getenv("PASSWORD")
 	dbname := os.Getenv("DBNAME")
 
@@ -187,8 +188,15 @@ func httpServer() {
 //
 
 func main() {
+	parseFlag := flag.Bool("p", false, "a bool")
+
+	flag.Parse()
+
 	dbConn()
 	defer db.Close()
-//	iterateAllSongs()
-	httpServer()
+	if *parseFlag {
+		iterateAllSongs()
+	} else {
+		httpServer()
+	}
 }

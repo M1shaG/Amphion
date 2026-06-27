@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: amphion
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: amphion
+      POSTGRES_USER: mishag
+      POSTGRES_PASSWORD: 6272
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/
+volumes:
+  pg_data:
