@@ -1,2 +1,5 @@
 server/songs
 server/db_songs
+client/build/bin
+client/node_modules
+client/frontend/dist

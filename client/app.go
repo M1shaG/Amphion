@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -49,8 +48,6 @@ func (a *App) GetSongs() ([]Song, error) {
 	if err != nil {
 		return nil, err
 	}
-	
-	fmt.Printf("%+v\n", songs)
 
 	return songs, nil
 }
