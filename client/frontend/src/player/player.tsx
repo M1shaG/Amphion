@@ -15,12 +15,24 @@ import {
 } from "@tabler/icons-react";
 import styles from "./player.module.css";
 import { useAudio } from "./../context/AudioContext";
+import { Song } from "./../songsTable/types";
+import { useSongTable } from "../context/AudioTableContext";
 
 export default function Player() {
+  const { audioID } = useAudio();
+  const { songs, loadingSongs } = useSongTable();
+
+  if (loadingSongs) {
+    return <div>Loading...</div>;
+  }
+
+  let currentSong = songs.find((s) => s.song_id === 1);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioUrl, setAudioUrl] = useState("");
   const [loading, setLoading] = useState(true);
-
+  const [audioName, setAudioName] = useState<string>(
+    currentSong?.song_title ?? "lol",
+  );
   const [playing, setPlaying] = useState(false);
   const [liked, setLiked] = useState(false);
   const [shuffle, setShuffle] = useState(false);
@@ -29,7 +41,6 @@ export default function Player() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const { audioID } = useAudio();
 
   useEffect(() => {
     setAudioUrl(`http://localhost:8080/songs/play?id=1`);
@@ -37,9 +48,15 @@ export default function Player() {
   }, []);
 
   useEffect(() => {
+    currentSong = songs.find((s) => s.song_id === audioID);
+    setAudioName(currentSong?.song_title ?? "lol");
+  }, [audioID]);
+
+  useEffect(() => {
     if (audioRef.current) {
       audioRef.current.src = `http://localhost:8080/songs/play?id=${audioID}`;
       audioRef.current.play();
+      setPlaying(true);
     }
   }, [audioID]);
 
@@ -118,7 +135,7 @@ export default function Player() {
         </div>
         <div>
           <div className={styles.trackTitle}>Серега Пират</div>
-          <div className={styles.trackAuthor}>Солевар</div>
+          <div className={styles.trackAuthor}>{audioName}</div>
         </div>
         <button
           onClick={() => setLiked(!liked)}
